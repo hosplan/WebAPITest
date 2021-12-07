@@ -12,7 +12,20 @@ namespace WebAPITest.Services
 {
     public interface IJWTService
     {
+        /// <summary>
+        /// Jwt 생성
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         public string GenerateJWT(string email, int roleId);
+
+        /// <summary>
+        /// Jwt decode
+        /// </summary>
+        /// <param name="jwt"></param>
+        /// <returns></returns>
+        public JwtSecurityToken DecodeJwt(string jwt);
     }
 
     public class JWTService : IJWTService
@@ -21,6 +34,12 @@ namespace WebAPITest.Services
         public JWTService(IConfiguration config)
         {
             _config = config;
+        }
+
+        public JwtSecurityToken DecodeJwt(string jwt)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            return handler.ReadJwtToken(jwt);
         }
 
         public string GenerateJWT(string email, int roleId)

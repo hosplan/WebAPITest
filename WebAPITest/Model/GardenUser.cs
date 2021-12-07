@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace WebAPITest.Model
 {
+    /// <summary>
+    /// GardenUser Model
+    /// CodeFirst
+    /// </summary>
     public class GardenUser
     {
         [Key]
@@ -22,7 +27,9 @@ namespace WebAPITest.Model
         public string FilePath { get; set; }
         public ICollection<GardenUserRoleMap> UserRoleMaps { get; set; }
     }
-
+    /// <summary>
+    /// 유저 ViewModel
+    /// </summary>
     public class UserViewModel
     {
         public string GUserName { get; set; }
@@ -34,15 +41,30 @@ namespace WebAPITest.Model
         public string GUserFilePath { get; set; }
     }
 
+    /// <summary>
+    /// 비밀번호 Hash Model
+    /// </summary>
     public class HashSalt
     {
         public string SaltPassword { get; set; }
         public byte[] Salt { get; set; }
     }
 
+    /// <summary>
+    /// 확인용 이메일 Model
+    /// </summary>
     public class ConfirmEmailCode
     {
         public string AuthCode { get; set; }
         public string Email { get; set; }
+    }
+
+    /// <summary>
+    /// 유저 이미지
+    /// </summary>
+    public class UserProfileImg
+    {
+        public string Jwt { get; set; }
+        public IFormFile ProfileImg { get; set; }
     }
 }
