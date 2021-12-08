@@ -27,7 +27,7 @@ namespace WebAPITest.Controllers
             _jwtService = jwtService;
         }
 
-        [Route("/guserLogin/login")]
+        [Route("/guserlogin")]
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Post([FromBody] GardenUser login)

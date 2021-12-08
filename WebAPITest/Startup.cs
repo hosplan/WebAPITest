@@ -118,7 +118,7 @@ namespace WebAPITest
 
 
             app.UseCors(builder =>
-                builder.WithOrigins("https://localhost:49153").AllowAnyHeader());
+                builder.WithOrigins("https://localhost:49153").AllowAnyHeader().AllowCredentials());
 
             app.UseRouting();
 
