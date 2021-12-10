@@ -26,6 +26,13 @@ namespace WebAPITest.Services
         /// <param name="jwt"></param>
         /// <returns></returns>
         public JwtSecurityToken DecodeJwt(string jwt);
+
+        /// <summary>
+        /// Jwt 내부의 Claimlist 얻기
+        /// </summary>
+        /// <param name="jwt"></param>
+        /// <returns></returns>
+        public List<Claim> GetClaimList(string jwt);
     }
 
     public class JWTService : IJWTService
@@ -41,6 +48,13 @@ namespace WebAPITest.Services
             var handler = new JwtSecurityTokenHandler();
             return handler.ReadJwtToken(jwt);
         }
+
+        public List<Claim> GetClaimList(string jwt)
+        {
+            JwtSecurityToken jwtSecurityToken = DecodeJwt(jwt);
+            return jwtSecurityToken.Claims.ToList();
+        }
+
 
         public string GenerateJWT(string email, int roleId)
         {

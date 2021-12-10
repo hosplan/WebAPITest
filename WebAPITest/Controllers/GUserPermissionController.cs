@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPITest.Model;
+using WebAPITest.Services;
 
 namespace WebAPITest.Controllers
 {
@@ -13,28 +14,25 @@ namespace WebAPITest.Controllers
     public class GUserPermissionController : ControllerBase
     {
         private readonly GardenUserContext _context;
+        private readonly IUserService _userService;
+        private readonly IJWTService _jwtService;
 
-        public GUserPermissionController(GardenUserContext context)
+        public GUserPermissionController(GardenUserContext context, IUserService userService, IJWTService jwtService)
         {
             _context = context;
+            _userService = userService;
+            _jwtService = jwtService;
         }
 
         [Route("/guserpermission")]
         [HttpGet]
-        public async Task<IActionResult> CheckGUserPermission()
+        public IActionResult CheckGUserPermission()
         {
             try
-            {
-                var em = HttpContext.Request.Headers["Authorization"];
-                var token = em.ToString();
-
-                var handler = new JwtSecurityTokenHandler();
-                var jwtValue = handler.ReadJwtToken(token);
+            {                
+                JwtSecurityToken jwtValue = _jwtService.DecodeJwt(HttpContext.Request.Headers["Authorization"].ToString());
                 var claimList = jwtValue.Claims.ToList();
-                var email = claimList[0].Value;
-                var role = claimList[1].Value;
-
-                return new JsonResult(new { token = true });
+                return new JsonResult(new { token = _userService.CheckMinimumUserRole(claimList[1].Value) });
             }
             catch(Exception ex)
             {

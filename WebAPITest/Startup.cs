@@ -98,7 +98,7 @@ namespace WebAPITest
             });
             services.AddScoped<IAuthorizationHandler, AuthServiceHandler>();
             services.AddDbContext<GardenUserContext>(options =>
-            options.UseSqlServer("Server=192.168.0.11,1433;Database=GardenUserSDB;User Id=SA;Password=emth022944w!;"));
+            options.UseSqlServer("Server=192.168.0.6,1433;Database=GardenUserSDB;User Id=SA;Password=emth022944w!;"));
 
             services.AddSwaggerGen(c =>
             {
@@ -117,9 +117,10 @@ namespace WebAPITest
             }
 
 
+            //app.UseCors(builder =>
+            //    builder.WithOrigins("https://localhost:49153").AllowAnyHeader().AllowCredentials());
             app.UseCors(builder =>
-                builder.WithOrigins("https://localhost:49153").AllowAnyHeader().AllowCredentials());
-
+                builder.WithOrigins("https://localhost:44380").AllowAnyHeader().AllowCredentials());
             app.UseRouting();
 
             //인증 서비스 제공

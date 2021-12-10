@@ -9,11 +9,11 @@ using WebAPITest.Model;
 namespace WebAPITest.Controllers
 {
     [ApiController]
-    public class GUserEmailConfirm : ControllerBase
+    public class GUserEmailConfirmController : ControllerBase
     {
         private readonly GardenUserContext _context;
 
-        public GUserEmailConfirm(GardenUserContext context)
+        public GUserEmailConfirmController(GardenUserContext context)
         {
             _context = context;
         }
