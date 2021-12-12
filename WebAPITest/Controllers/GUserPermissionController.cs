@@ -30,9 +30,7 @@ namespace WebAPITest.Controllers
         {
             try
             {                
-                JwtSecurityToken jwtValue = _jwtService.DecodeJwt(HttpContext.Request.Headers["Authorization"].ToString());
-                var claimList = jwtValue.Claims.ToList();
-                return new JsonResult(new { token = _userService.CheckMinimumUserRole(claimList[1].Value) });
+                return new JsonResult(new { token = _jwtService.GetRoleId(_jwtService.GetClaimList(HttpContext.Request.Headers["Authorization"].ToString())) });
             }
             catch(Exception ex)
             {

@@ -117,10 +117,10 @@ namespace WebAPITest
             }
 
 
-            //app.UseCors(builder =>
-            //    builder.WithOrigins("https://localhost:49153").AllowAnyHeader().AllowCredentials());
             app.UseCors(builder =>
-                builder.WithOrigins("https://localhost:44380").AllowAnyHeader().AllowCredentials());
+                builder.WithOrigins("https://localhost:49156").AllowAnyHeader().AllowCredentials());
+            //app.UseCors(builder =>
+            //    builder.WithOrigins("https://localhost:44380").AllowAnyHeader().AllowCredentials());
             app.UseRouting();
 
             //인증 서비스 제공

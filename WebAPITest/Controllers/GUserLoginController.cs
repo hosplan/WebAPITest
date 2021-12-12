@@ -44,9 +44,11 @@ namespace WebAPITest.Controllers
                     return Ok(new { token = false });
                 }
 
+                int roleId = gUser.UserRoleMaps.First().RoleId;
                 return Ok(new
                 {
-                    token = _jwtService.GenerateJWT(gUser.Email, gUser.UserRoleMaps.First().RoleId)
+                    token = _jwtService.GenerateJWT(gUser.Email, roleId),
+                    roleId = roleId
                 });
             }
             catch(Exception ex)

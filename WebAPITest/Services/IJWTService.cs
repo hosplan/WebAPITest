@@ -33,6 +33,10 @@ namespace WebAPITest.Services
         /// <param name="jwt"></param>
         /// <returns></returns>
         public List<Claim> GetClaimList(string jwt);
+
+        public string GetEmail(List<Claim> claimList);
+
+        public string GetRoleId(List<Claim> claimList);
     }
 
     public class JWTService : IJWTService
@@ -41,6 +45,16 @@ namespace WebAPITest.Services
         public JWTService(IConfiguration config)
         {
             _config = config;
+        }
+
+        public string GetEmail(List<Claim> claimList)
+        {
+            return claimList[0].Value;
+        }
+
+        public string GetRoleId(List<Claim> claimList)
+        {
+            return claimList[1].Value;
         }
 
         public JwtSecurityToken DecodeJwt(string jwt)

@@ -14,11 +14,13 @@ namespace WebAPITest.Controllers
     {
         private readonly IHashService _hashService;
         private readonly GardenUserContext _context;
+        private readonly IJWTService _jwtService;
 
-        public GUserMemberShipController(IHashService hashService, GardenUserContext context)
+        public GUserMemberShipController(IHashService hashService, GardenUserContext context, IJWTService jwtService)
         {
             _hashService = hashService;
             _context = context;
+            _jwtService = jwtService;
         }
         
         /// <summary>
@@ -28,7 +30,7 @@ namespace WebAPITest.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("/membership")]
-        public async Task<IActionResult> CreateGardenUser([FromBody] GardenUser gardenUser)
+        public async Task<IActionResult> CreateGardenUser([FromForm] GardenUser gardenUser)
         {
             try
             {
@@ -37,10 +39,12 @@ namespace WebAPITest.Controllers
                 gardenUser.Password = hashSalt.SaltPassword;
                 gardenUser.StoredSalt = hashSalt.Salt;
 
-                //_context.Add(gardenUser);
-                //await _context.SaveChangesAsync();
+                _context.Add(gardenUser);
+                await _context.SaveChangesAsync();
 
-                return Ok(new { token = true });
+                await CreateGardenUserRole(gardenUser.Id);
+
+                return Ok(new { token = true, jwt = _jwtService.GenerateJWT(gardenUser.Email, 4) });
             }
             catch(Exception ex)
             {
@@ -49,10 +53,34 @@ namespace WebAPITest.Controllers
             }
         }
 
+        /// <summary>
+        /// UserRoleMap 생성
+        /// </summary>
+        /// <param name="guserId"></param>
+        /// <returns></returns>
+        private async Task<bool> CreateGardenUserRole(int guserId)
+        {
+            try
+            {
+                GardenUserRoleMap map = new GardenUserRoleMap();
+                map.UserId = guserId;
+                map.RoleId = 4;
+
+                _context.Add(map);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                string error = ex.Message;
+                return false;
+            }
+        }
 
         [HttpPost]
         [Route("/checkemail")]
-        public IActionResult CheckEmail([FromBody] GardenUser guser)
+        public IActionResult CheckEmail([FromForm] GardenUser guser)
         {
             try
             {

@@ -41,6 +41,11 @@ namespace WebAPITest.Model
         public string GUserFilePath { get; set; }
     }
 
+    public class Register
+    {
+        public string Email { get; set; }
+    }
+
     /// <summary>
     /// 비밀번호 Hash Model
     /// </summary>
