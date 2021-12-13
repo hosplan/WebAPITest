@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPITest.Hubs;
 using WebAPITest.Model;
 using WebAPITest.Services;
 
@@ -34,6 +35,8 @@ namespace WebAPITest
         {
             services.AddControllers();
             services.AddHttpContextAccessor();
+            //signalR 서비스 추가
+            services.AddSignalR();
             //dbContext 서비스 추가
             services.AddDbContext<GardenUserContext>(options =>
                 options.UseSqlServer(
@@ -46,6 +49,8 @@ namespace WebAPITest
             services.AddScoped<HashService, HashService>();
             services.AddScoped<IUserService, UserService>();
 
+            //email Setting
+            services.Configure<MailSetting>(Configuration.GetSection("MailSettings"));
     
             //cors 추가
             services.AddCors();
@@ -118,7 +123,10 @@ namespace WebAPITest
 
 
             app.UseCors(builder =>
-                builder.WithOrigins("https://localhost:49156").AllowAnyHeader().AllowCredentials());
+                builder.WithOrigins("https://localhost:49154")
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod()
+                                    .AllowCredentials());
             //app.UseCors(builder =>
             //    builder.WithOrigins("https://localhost:44380").AllowAnyHeader().AllowCredentials());
             app.UseRouting();
@@ -129,6 +137,7 @@ namespace WebAPITest
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<RealTimeCheckHub>("/realtimeCheckHub");
                 endpoints.MapControllers();
             });
         }

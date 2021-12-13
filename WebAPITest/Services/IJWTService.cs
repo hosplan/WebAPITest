@@ -34,6 +34,7 @@ namespace WebAPITest.Services
         /// <returns></returns>
         public List<Claim> GetClaimList(string jwt);
 
+
         public string GetEmail(List<Claim> claimList);
 
         public string GetRoleId(List<Claim> claimList);

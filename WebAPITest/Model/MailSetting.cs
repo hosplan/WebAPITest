@@ -13,4 +13,10 @@ namespace WebAPITest.Model
         public string Host { get; set; }
         public int Port { get; set; }
     }
+
+    public class ConfirmEmail
+    {
+        public string Email { get; set; }
+        public string AuthCode { get; set; }
+    }
 }

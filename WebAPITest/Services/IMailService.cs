@@ -46,8 +46,9 @@ namespace WebAPITest.Services
                 smtp.Disconnect(true);
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                string error = ex.Message;
                 return false;
             }
         }
