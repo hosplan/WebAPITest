@@ -123,7 +123,7 @@ namespace WebAPITest
 
 
             app.UseCors(builder =>
-                builder.WithOrigins("https://localhost:49154")
+                builder.WithOrigins("https://localhost:49157")
                                     .AllowAnyHeader()
                                     .AllowAnyMethod()
                                     .AllowCredentials());
