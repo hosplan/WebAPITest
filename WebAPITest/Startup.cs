@@ -101,9 +101,10 @@ namespace WebAPITest
                 options.AddPolicy("RoleGrade", policy =>
                     policy.Requirements.Add(new AuthService(3)));
             });
+
             services.AddScoped<IAuthorizationHandler, AuthServiceHandler>();
-            services.AddDbContext<GardenUserContext>(options =>
-            options.UseSqlServer("Server=192.168.0.6,1433;Database=GardenUserSDB;User Id=SA;Password=emth022944w!;"));
+            //services.AddDbContext<GardenUserContext>(options =>
+            //options.UseSqlServer("Server=192.168.0.10,1433;Database=GardenUserSDB;User Id=SA;Password=emth022944w!;"));
 
             services.AddSwaggerGen(c =>
             {
@@ -123,7 +124,7 @@ namespace WebAPITest
 
 
             app.UseCors(builder =>
-                builder.WithOrigins("https://localhost:49157")
+                builder.WithOrigins("https://localhost:49155")
                                     .AllowAnyHeader()
                                     .AllowAnyMethod()
                                     .AllowCredentials());

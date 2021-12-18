@@ -85,14 +85,14 @@ namespace WebAPITest.Controllers
             try
             {
                 GardenUser gUser = _context.GardenUser.FirstOrDefault(g => g.Email == guser.Email);
-                if(gUser != null) { return Ok(new { token = false }); }
+                if(gUser != null) { return Ok(new { token = false , message = "이미 가입된 이메일 이네요."}); }
 
-                return Ok(new { token = true });
+                return Ok(new { token = true, message = "확인완료" });
             }
             catch(Exception ex)
             {
                 string error = ex.Message;
-                return Ok(new { token = false });
+                return Ok(new { token = false , message = "오류가 발생했습니다. 잠시후에 다시 시도 해주세요!"});
             }
         }
     }
