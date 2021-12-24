@@ -47,7 +47,7 @@ namespace WebAPITest.Controllers
                 int roleId = gUser.UserRoleMaps.First().RoleId;
                 return Ok(new
                 {
-                    token = _jwtService.GenerateJWT(gUser.Email, roleId),
+                    token = _jwtService.GenerateJWT(gUser, roleId),
                     roleId = roleId
                 });
             }

@@ -44,7 +44,7 @@ namespace WebAPITest.Controllers
 
                 await CreateGardenUserRole(gardenUser.Id);
 
-                return Ok(new { token = true, jwt = _jwtService.GenerateJWT(gardenUser.Email, 4) });
+                return Ok(new { token = true, jwt = _jwtService.GenerateJWT(gardenUser, 4) });
             }
             catch(Exception ex)
             {

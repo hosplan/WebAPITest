@@ -24,11 +24,11 @@ namespace WebAPITest.Controllers
 
         [HttpPost]
         [Route("/profile")]
-        public async Task<IActionResult> EnrollUserProfileImg([FromForm] Model.UserProfileImg profile)
+        public IActionResult EnrollUserProfileImg([FromForm] Model.UserProfileImg profile)
         {
             try
             {
-                int guserId = await GetGardenUserId(profile.Jwt);
+                int guserId = GetGardenUserId(profile.Jwt);
 
                 return Ok(new { token = true });
             }
@@ -39,7 +39,7 @@ namespace WebAPITest.Controllers
             }
         }
 
-        private async Task<int> GetGardenUserId(string jwt)
+        private int GetGardenUserId(string jwt)
         {
             try
             {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPITest.Model;
 
 namespace WebAPITest.Services
 {
@@ -18,7 +19,7 @@ namespace WebAPITest.Services
         /// <param name="email"></param>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public string GenerateJWT(string email, int roleId);
+        public string GenerateJWT(GardenUser email, int roleId);
 
         /// <summary>
         /// Jwt decode
@@ -71,16 +72,17 @@ namespace WebAPITest.Services
         }
 
 
-        public string GenerateJWT(string email, int roleId)
+        public string GenerateJWT(GardenUser guser, int roleId)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                new Claim("eml", email),
-                new Claim("rol", Convert.ToString(roleId)),
+                new Claim("eml", guser.Email),
+                new Claim("rol", roleId.ToString()),
                 new Claim("jti", Guid.NewGuid().ToString()),
+                new Claim("gky", guser.Id.ToString())
             };
 
             var token = new JwtSecurityToken(

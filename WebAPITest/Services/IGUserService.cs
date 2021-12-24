@@ -38,7 +38,7 @@ namespace WebAPITest.Services
         {
             try
             {
-                return _jwtService.GenerateJWT(loginUser.Email, loginUser.UserRoleMaps.First().RoleId);
+                return _jwtService.GenerateJWT(loginUser, loginUser.UserRoleMaps.First().RoleId);
             }
             catch(Exception ex)
             {
